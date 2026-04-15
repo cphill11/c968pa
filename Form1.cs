@@ -1,12 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace c968pa
@@ -28,13 +21,72 @@ namespace c968pa
 
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+
+
+        private void button1_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Left Add Button was clicked.");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Left Modify Button was clicked.");
 
         }
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    label2.Text = "Add Item";
-        //}
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Left Delete Button was clicked.");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Right Add Button was clicked.");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Right Modify Button was clicked.");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Right Delete Button was clicked.");
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Left Search Button was clicked.");
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Right Search Button was clicked.");
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Exit Button clicked.");
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("Parts Search text field used.");
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("Products Search text field used.");
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show("Parts data grid interacted with.");
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show("Products data grid interacted with.");
+        }
     }
 }
