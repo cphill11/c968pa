@@ -1,4 +1,6 @@
-﻿namespace c968pa
+﻿using System;
+
+namespace c968pa
 {
     partial class Form1
     {
@@ -328,6 +330,11 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
