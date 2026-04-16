@@ -8,7 +8,8 @@ namespace c968pa
 {
     public class Part
     {
+        public int ID {  get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
+        public decimal Cost{ get; set; }
     }
 }
