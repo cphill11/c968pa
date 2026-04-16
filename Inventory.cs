@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace c968pa
 {
     public class Inventory
     {
+        //Define Data (Properties)
         public BindingList<Product> Products { get; set; } = new BindingList<Product>();
         public BindingList<Part> AllParts { get; set; } = new BindingList<Part>();
 
@@ -33,13 +35,13 @@ namespace c968pa
 
         public Product LookupProduct(int productID)
         {
-            return Products.FirstOrDefault(p => p.ID == productID);
+            return Products.FirstOrDefault(p => p.ProductID == productID);
         }
         public void UpdateProduct(int productID, Product updatedProduct)
         {
             for (int i = 0; i < Products.Count; i++)
             {
-                if (Products[i].ID == productID)
+                if (Products[i].ProductID == productID)
                 {
                     Products[i] = updatedProduct;
                     return;
@@ -62,14 +64,14 @@ namespace c968pa
 
         public Part LookupPart(int partID)
         {
-            return AllParts.FirstOrDefault(p => p.ID == partID);
+            return AllParts.FirstOrDefault(p => p.PartID == partID);
         }
 
         public void UpdatePart(int partID, Part updatedPart)
         {
             for (int i = 0; i < AllParts.Count; i++)
             {
-                if (AllParts[i].ID == partID)
+                if (AllParts[i].PartID == partID)
                 {
                     AllParts[i] = updatedPart;
                     return;
