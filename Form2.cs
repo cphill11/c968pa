@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,54 +20,244 @@ namespace c968pa
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("In-house radio button used.");
+           lblDynamic.Text = "Machine ID";
+           
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("Outsourced radio button used.");
+            lblDynamic.Text = "Company Name";
+           
         }
 
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)        // ID text box
         {
-            MessageBox.Show("ID text box used.");
+            
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void textBox2_TextChanged(object sender, EventArgs e)           // Name text box
         {
-            MessageBox.Show("Name text box used.");
+
+            if (string.IsNullOrWhiteSpace(textBox2.Text))
+            {
+                errorProvider1.SetError(textBox2, "Name cannot be empty");
+            }
+            else
+            {
+                errorProvider1.SetError(textBox2, "");
+            }
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+
+
+        private void textBox3_TextChanged(object sender, EventArgs e)      // Inventory text box
         {
-            MessageBox.Show("Inventory text box used.");
+            if (!int.TryParse(textBox3.Text, out _))
+            {
+                errorProvider1.SetError(textBox3, "Invalid inventory value");
+            }
+            else
+            {
+                errorProvider1.SetError(textBox3, "");
+            }
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        private void textBox4_TextChanged(object sender, EventArgs e)     // Price or cost text box
         {
-            MessageBox.Show("Price or Cost text box used.");
+            if (!decimal.TryParse(textBox4.Text, out _))
+            {
+                errorProvider1.SetError(textBox4, "Invalid price");
+            }
+            else
+            {
+                errorProvider1.SetError(textBox4, "");
+            }
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
+        private void textBox5_TextChanged(object sender, EventArgs e)    // Max text box
         {
-            MessageBox.Show("Max text box used.");
+            if (!int.TryParse(textBox5.Text, out _))
+            {
+                errorProvider1.SetError(textBox5, "Max must be a number");
+            }
+            else
+            {
+                errorProvider1.SetError(textBox5, "");
+            }
+
+            ValidateMinMax();
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e)
+        private void textBox6_TextChanged(object sender, EventArgs e)     // Min text box
         {
-            MessageBox.Show("Min text box used.");
+            if (!int.TryParse(textBox6.Text, out _))
+            {
+                errorProvider1.SetError(textBox6, "Min must be a number");
+            }
+            else
+            {
+                errorProvider1.SetError(textBox6, "");
+            }
+
+            ValidateMinMax();
         }
 
-        private void textBox7_TextChanged(object sender, EventArgs e)
+        private void ValidateMinMax()
         {
-            MessageBox.Show("Machine ID or Company Name text box used.");
+            // 🔹 If required fields are empty, don't validate yet
+            if (string.IsNullOrWhiteSpace(textBox5.Text) || // Max
+                string.IsNullOrWhiteSpace(textBox6.Text) || // Min
+                string.IsNullOrWhiteSpace(textBox3.Text))   // Inventory
+            {
+                // Clear errors and exit
+                errorProvider1.SetError(textBox5, "");
+                errorProvider1.SetError(textBox6, "");
+                errorProvider1.SetError(textBox3, "");
+                return;
+            }
+
+            // 🔹 Clear existing errors first
+            errorProvider1.SetError(textBox5, "");
+            errorProvider1.SetError(textBox6, "");
+            errorProvider1.SetError(textBox3, "");
+
+            // 🔹 Now validate
+            if (int.TryParse(textBox5.Text, out int max) &&
+                int.TryParse(textBox6.Text, out int min) &&
+                int.TryParse(textBox3.Text, out int stock))
+            {
+                if (min > max)
+                {
+                    errorProvider1.SetError(textBox6, "Min cannot be greater than Max");
+                    errorProvider1.SetError(textBox5, "Max must be ≥ Min");
+                }
+
+                if (stock < min || stock > max)
+                {
+                    errorProvider1.SetError(textBox3, "Inventory not within Min/Max");
+                }
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void textBox7_TextChanged(object sender, EventArgs e)        // Machine ID Or Company Name text box
         {
-            MessageBox.Show("Save button clicked.");
+
+            if (radioButton1.Checked) // InHouse
+            {
+                if (!int.TryParse(textBox7.Text, out _))
+                {
+                    errorProvider1.SetError(textBox7, "Machine ID must be a number");
+                }
+                else
+                {
+                    errorProvider1.SetError(textBox7, "");
+                }
+            }
+            else // Outsourced
+            {
+                if (string.IsNullOrWhiteSpace(textBox7.Text))
+                {
+                    errorProvider1.SetError(textBox7, "Company Name required");
+                }
+                else
+                {
+                    errorProvider1.SetError(textBox7, "");
+                }
+            }
         }
+
+        private void button1_Click(object sender, EventArgs e)           //Save button
+        {
+            try
+            {
+                int id = int.Parse(textBox1.Text);
+                string name = textBox2.Text;
+                decimal price = decimal.Parse(textBox4.Text);
+                int stock = int.Parse(textBox3.Text);
+                int min = int.Parse(textBox6.Text);
+                int max = int.Parse(textBox5.Text);
+
+                //Validation logic
+                if (min > max)
+                {
+                    MessageBox.Show("Minimum value cannot be greater than Maximum value.");
+                    return;
+                }
+
+                if (stock < min || stock > max)
+                {
+                    MessageBox.Show("Inventory stock level must be between minimum value and maximum value.");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(name))
+                    {
+                    MessageBox.Show("Name cannot be empty.");
+                    return;
+                }
+
+                Part newPart;
+
+                if (radioButton1.Checked) // InHouse
+                {
+                    int machineID;
+
+                    if (!int.TryParse(textBox7.Text, out machineID))
+                    {
+                        MessageBox.Show("Machine ID must be a number.");
+                        return;
+                    }
+
+                    newPart = new Inhouse
+                    {
+                        PartID = id,
+                        Name = name,
+                        Price = price,
+                        InStock = stock,
+                        Min = min,
+                        Max = max,
+                        MachineID = int.Parse(textBox7.Text)
+                    };
+                }
+                else // Outsourced
+                {
+                    string company = textBox7.Text;
+
+                    if (string.IsNullOrWhiteSpace(company))
+                    {
+                        MessageBox.Show("Company Name cannot be empty.");
+                        return;
+                    }
+
+                    newPart = new Outsourced
+                    {
+                        PartID = id,
+                        Name = name,
+                        Price = price,
+                        InStock = stock,
+                        Min = min,
+                        Max = max,
+                        CompanyName = textBox7.Text
+                    };
+                }
+
+                Program.Inventory.AllParts.Add(newPart);
+
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Invalid data input.  Please review fields.");
+            }
+            //MessageBox.Show("Data saved.");
+        }
+
+
+
+
+
+
 
         private void button2_Click(object sender, EventArgs e)
         {

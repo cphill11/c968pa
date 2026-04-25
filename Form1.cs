@@ -27,6 +27,10 @@ namespace c968pa
         }
         private void button1_Click(object sender, EventArgs e)
         {
+
+            Form2 addPartForm = new Form2();
+            addPartForm.ShowDialog();
+
             MessageBox.Show("Left Add Button was clicked.");
         }
 
