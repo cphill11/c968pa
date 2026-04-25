@@ -9,14 +9,22 @@ namespace c968pa
         public Form1()
         {
             InitializeComponent();
+
+            //Force datagrid views to auto generate
+            dataGridViewProducts.AutoGenerateColumns = true;
+            dataGridViewParts.AutoGenerateColumns = true;
+
+            dataGridViewProducts.DataSource = Program.Inventory.Products;
+            dataGridViewParts.DataSource = Program.Inventory.AllParts;
+            //MessageBox.Show(Program.Inventory.Products.Count.ToString());       <--- used to test grid error
         }
+
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
-
         private void button1_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Left Add Button was clicked.");
