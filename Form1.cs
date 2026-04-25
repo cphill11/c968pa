@@ -38,7 +38,20 @@ namespace c968pa
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Left Delete Button was clicked.");
+            if (dataGridViewParts.CurrentRow != null)
+            {
+                var confirm = MessageBox.Show(
+                    "Are you sure you want to delete this part?",
+                    "Confirm Delete",
+                    MessageBoxButtons.YesNo);
+
+                if (confirm == DialogResult.Yes)
+                {
+                    Part selected = (Part)dataGridViewParts.CurrentRow.DataBoundItem;
+                    Program.Inventory.AllParts.Remove(selected);
+                }
+            }
+            //MessageBox.Show("Left Delete Button was clicked.");
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -53,7 +66,20 @@ namespace c968pa
 
         private void button6_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Right Delete Button was clicked.");
+            if (dataGridViewProducts.CurrentRow != null)
+            {
+                var confirm = MessageBox.Show(
+                    "Are you sure you want to delete this product?",
+                    "Confirm Delete",
+                    MessageBoxButtons.YesNo);
+
+                if (confirm == DialogResult.Yes)
+                {
+                    Product selected = (Product)dataGridViewProducts.CurrentRow.DataBoundItem;
+                    Program.Inventory.Products.Remove(selected);
+                }
+            }
+            //MessageBox.Show("Right Delete Button was clicked.");
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -83,12 +109,12 @@ namespace c968pa
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show("Parts data grid interacted with.");
+            //MessageBox.Show("Parts data grid interacted with.");
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show("Products data grid interacted with.");
+            //MessageBox.Show("Products data grid interacted with.");
         }
     }
 }
