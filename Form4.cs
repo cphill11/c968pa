@@ -12,14 +12,43 @@ namespace c968pa
 {
     public partial class Form4 : Form
     {
+        private Product currentProduct = null;
         private BindingList<Part> associatedParts = new BindingList<Part>();
 
-        public Form4()
+
+        public Form4()   // allows to add product
         {
             InitializeComponent();
             dataGridView1.DataSource = Program.Inventory.AllParts;
             dataGridView2.DataSource = associatedParts;
 
+        }
+
+        public Form4(Product product)     // allows to modify product
+        {
+            InitializeComponent();
+            currentProduct = product;
+
+            // Copy associated parts (important: new list, not reference)
+            associatedParts = new BindingList<Part>(product.AssociatedParts.ToList());
+
+            // Bind grids
+            dataGridView1.DataSource = Program.Inventory.AllParts;
+            dataGridView2.DataSource = associatedParts;
+
+            // Fill fields
+            textBox2.Text = product.ProductID.ToString();
+            textBox3.Text = product.Name;
+            textBox4.Text = product.InStock.ToString();
+            textBox5.Text = product.Price.ToString();
+            textBox6.Text = product.Max.ToString();
+            textBox7.Text = product.Min.ToString();
+
+            // Lock ID
+            textBox2.Enabled = false;
+
+            // Optional: change title
+            this.Text = "Modify Product";
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -86,29 +115,50 @@ namespace c968pa
         {
             try
             {
-                Product newProduct = new Product
+                if (associatedParts.Count == 0)
                 {
-                    ProductID = int.Parse(textBox2.Text),
-                    Name = textBox3.Text,
-                    InStock = int.Parse(textBox4.Text),
-                    Price = decimal.Parse(textBox5.Text),
-                    Max = int.Parse(textBox6.Text),
-                    Min = int.Parse(textBox7.Text)
-                };
-
-                // Add associated parts
-                foreach (Part p in associatedParts)
-                {
-                    newProduct.AddAssociatedPart(p);
+                    MessageBox.Show("Product must have at least one associated part.");
+                    return;
                 }
 
-                Program.Inventory.Products.Add(newProduct);
+                if (currentProduct == null)
+                {
+                    // ADD MODE
+                    Product newProduct = new Product
+                    {
+                        ProductID = int.Parse(textBox2.Text),
+                        Name = textBox3.Text,
+                        InStock = int.Parse(textBox4.Text),
+                        Price = decimal.Parse(textBox5.Text),
+                        Max = int.Parse(textBox6.Text),
+                        Min = int.Parse(textBox7.Text)
+                    };
+
+                    foreach (Part p in associatedParts)
+                        newProduct.AddAssociatedPart(p);
+
+                    Program.Inventory.Products.Add(newProduct);
+                }
+                else
+                {
+                    // MODIFY MODE
+                    currentProduct.Name = textBox3.Text;
+                    currentProduct.InStock = int.Parse(textBox4.Text);
+                    currentProduct.Price = decimal.Parse(textBox5.Text);
+                    currentProduct.Max = int.Parse(textBox6.Text);
+                    currentProduct.Min = int.Parse(textBox7.Text);
+
+                    // Replace associated parts
+                    currentProduct.AssociatedParts.Clear();
+                    foreach (Part p in associatedParts)
+                        currentProduct.AddAssociatedPart(p);
+                }
 
                 this.Close();
             }
             catch
             {
-                MessageBox.Show("Invalid input. Please check all fields.");
+                MessageBox.Show("Invalid input.");
             }
         }
         private void button3_Click(object sender, EventArgs e)    // Delete button

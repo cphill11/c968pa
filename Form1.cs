@@ -16,20 +16,17 @@ namespace c968pa
 
             dataGridViewProducts.DataSource = Program.Inventory.Products;
             dataGridViewParts.DataSource = Program.Inventory.AllParts;
-            //MessageBox.Show(Program.Inventory.Products.Count.ToString());       <--- used to test grid error
         }
 
 
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+        {}
+        
         private void button1_Click(object sender, EventArgs e)       // Add part button
         {
             Form2 addPartForm = new Form2();
             addPartForm.ShowDialog();
-
         }
 
         private void button2_Click(object sender, EventArgs e)    // Modify part button
@@ -65,12 +62,21 @@ namespace c968pa
 
         private void button4_Click(object sender, EventArgs e)     // Add product button
         {
-            
+            Form4 form = new Form4();  // Add mode (no parameter)
+            form.ShowDialog();
         }
 
         private void button5_Click(object sender, EventArgs e)   // Modify product button
         {
-           
+            if (dataGridViewProducts.CurrentRow != null)
+            {
+                Product selected = (Product)dataGridViewProducts.CurrentRow.DataBoundItem;
+
+                Form4 form = new Form4(selected);
+                form.ShowDialog();
+
+                dataGridViewProducts.Refresh();
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)   // Delete product button
