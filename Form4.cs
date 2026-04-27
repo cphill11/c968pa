@@ -47,21 +47,19 @@ namespace c968pa
             // Lock ID
             textBox2.Enabled = false;
 
-            // Optional: change title
-            this.Text = "Modify Product";
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void label6_Click(object sender, EventArgs e)   // Name label
+        {
+        
+        }
+
+        private void label8_Click(object sender, EventArgs e)  // Price label
         {
 
         }
 
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
+        private void label10_Click(object sender, EventArgs e) // Min label
         {
 
         }
@@ -154,6 +152,7 @@ namespace c968pa
                         currentProduct.AddAssociatedPart(p);
                 }
 
+                MessageBox.Show("Product added successfully.");
                 this.Close();
             }
             catch
