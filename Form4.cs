@@ -175,7 +175,14 @@ namespace c968pa
         }
         private void button5_Click(object sender, EventArgs e)    // Search button
         {
-            string search = textBox1.Text;
+            string search = textBox1.Text.Trim();
+
+            // Reset if empty
+            if (string.IsNullOrEmpty(search))
+            {
+                dataGridView1.DataSource = Program.Inventory.AllParts;
+                return;
+            }
 
             var results = Program.Inventory.AllParts
                 .Where(p => p.Name.ToLower().Contains(search.ToLower()) ||
@@ -185,6 +192,10 @@ namespace c968pa
             if (results.Any())
             {
                 dataGridView1.DataSource = new BindingList<Part>(results);
+
+                // Optional: highlight first result
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[0].Selected = true;
             }
             else
             {

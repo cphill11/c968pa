@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 
@@ -99,12 +101,52 @@ namespace c968pa
 
         private void button8_Click(object sender, EventArgs e)   // Part search button
         {
-           
+            string search = textBox1.Text.Trim();
+
+            var results = Program.Inventory.AllParts
+                .Where(p => p.Name.ToLower().Contains(search.ToLower()) ||
+                            p.PartID.ToString() == search)
+                .ToList();
+
+            if (results.Any())
+            {
+                dataGridViewParts.DataSource = new BindingList<Part>(results);
+            }
+            else
+            {
+                MessageBox.Show("No matching parts found.");
+            }
+
+            if (string.IsNullOrEmpty(search))
+            {
+                dataGridViewParts.DataSource = Program.Inventory.AllParts;
+                return;
+            }
         }
 
         private void button9_Click(object sender, EventArgs e)     // Product search button
         {
-           
+            string search = textBox2.Text.Trim();
+
+            var results = Program.Inventory.Products
+                .Where(p => p.Name.ToLower().Contains(search.ToLower()) ||
+                            p.ProductID.ToString() == search)
+                .ToList();
+
+            if (results.Any())
+            {
+                dataGridViewProducts.DataSource = new BindingList<Product>(results);
+            }
+            else
+            {
+                MessageBox.Show("No matching products found.");
+            }
+
+            if (string.IsNullOrEmpty(search))
+            {
+                dataGridViewProducts.DataSource = Program.Inventory.Products;
+                return;
+            }
         }
 
         private void button10_Click(object sender, EventArgs e)   // Exit page button
@@ -119,7 +161,7 @@ namespace c968pa
 
         private void textBox2_TextChanged(object sender, EventArgs e)    // Product search text field
         {
-            MessageBox.Show("Products Search text field used.");
+           
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)     // Part data grid
