@@ -24,7 +24,7 @@ namespace c968pa
 
             //Test Code
 
-            Program.Inventory.AllParts.Add(new Inhouse
+            Program.Inventory.AllParts.Add(new InHouse
             {
                 PartID = 1,
                 Name = "Wheel",

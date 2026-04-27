@@ -78,7 +78,7 @@
     <Compile Include="Form5.Designer.cs">
       <DependentUpon>Form5.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inhouse.cs" />
+    <Compile Include="InHouse.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="Outsourced.cs" />
     <Compile Include="Part.cs" />

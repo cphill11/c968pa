@@ -25,22 +25,28 @@ namespace c968pa
         {
 
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)       // Add part button
         {
-
             Form2 addPartForm = new Form2();
             addPartForm.ShowDialog();
 
-            MessageBox.Show("Left Add Button was clicked.");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)    // Modify part button
         {
-            MessageBox.Show("Left Modify Button was clicked.");
+            if (dataGridViewParts.CurrentRow != null)
+            {
+                Part selected = (Part)dataGridViewParts.CurrentRow.DataBoundItem;
+
+                Form3 form = new Form3(selected);
+                form.ShowDialog();
+
+                dataGridViewParts.Refresh(); // ensures UI updates
+            }
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)      // Delete part button
         {
             if (dataGridViewParts.CurrentRow != null)
             {
@@ -55,20 +61,19 @@ namespace c968pa
                     Program.Inventory.AllParts.Remove(selected);
                 }
             }
-            //MessageBox.Show("Left Delete Button was clicked.");
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)     // Add product button
         {
-            MessageBox.Show("Right Add Button was clicked.");
+            
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)   // Modify product button
         {
-            MessageBox.Show("Right Modify Button was clicked.");
+           
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)   // Delete product button
         {
             if (dataGridViewProducts.CurrentRow != null)
             {
@@ -83,42 +88,42 @@ namespace c968pa
                     Program.Inventory.Products.Remove(selected);
                 }
             }
-            //MessageBox.Show("Right Delete Button was clicked.");
+           
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void button8_Click(object sender, EventArgs e)   // Part search button
         {
-            MessageBox.Show("Left Search Button was clicked.");
+           
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        private void button9_Click(object sender, EventArgs e)     // Product search button
         {
-            MessageBox.Show("Right Search Button was clicked.");
+           
         }
 
-        private void button10_Click(object sender, EventArgs e)
+        private void button10_Click(object sender, EventArgs e)   // Exit page button
         {
-            MessageBox.Show("Exit Button clicked.");
+            
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)     // Part search text field
         {
-            MessageBox.Show("Parts Search text field used.");
+            
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void textBox2_TextChanged(object sender, EventArgs e)    // Product search text field
         {
             MessageBox.Show("Products Search text field used.");
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)     // Part data grid
         {
-            //MessageBox.Show("Parts data grid interacted with.");
+          
         }
 
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)    // Product data grid
         {
-            //MessageBox.Show("Products data grid interacted with.");
+            
         }
     }
 }

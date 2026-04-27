@@ -209,7 +209,7 @@ namespace c968pa
                         return;
                     }
 
-                    newPart = new Inhouse
+                    newPart = new InHouse
                     {
                         PartID = id,
                         Name = name,
@@ -259,9 +259,9 @@ namespace c968pa
 
 
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)     // Cancel button
         {
-            MessageBox.Show("Cancel button clicked.");
+           
         }
     }
 }

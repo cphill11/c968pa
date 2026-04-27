@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace c968pa
 {
     //Inhouse class will inherit from Part class
-    public class Inhouse : Part
+    public class InHouse : Part
     {
         public int MachineID { get; set; }
     }
