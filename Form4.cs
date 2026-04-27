@@ -12,9 +12,14 @@ namespace c968pa
 {
     public partial class Form4 : Form
     {
+        private BindingList<Part> associatedParts = new BindingList<Part>();
+
         public Form4()
         {
             InitializeComponent();
+            dataGridView1.DataSource = Program.Inventory.AllParts;
+            dataGridView2.DataSource = associatedParts;
+
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -32,73 +37,120 @@ namespace c968pa
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)    // search text field
         {
-            MessageBox.Show("Search text field used.");
+           
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void textBox2_TextChanged(object sender, EventArgs e)   // ID text field
         {
-            MessageBox.Show("ID text field used.");
+           
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void textBox3_TextChanged(object sender, EventArgs e)   // Name text field
         {
-            MessageBox.Show("Name text field used.");
+           
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        private void textBox4_TextChanged(object sender, EventArgs e)   // Inventory text field
         {
-            MessageBox.Show("Inventory text field used.");
+            
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
+        private void textBox5_TextChanged(object sender, EventArgs e)    // Price text field
         {
-            MessageBox.Show("Price text field used.");
+           
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e)
+        private void textBox6_TextChanged(object sender, EventArgs e)    // Max text field
         {
-            MessageBox.Show("Max text field used.");
+           
         }
 
-        private void textBox7_TextChanged(object sender, EventArgs e)
+        private void textBox7_TextChanged(object sender, EventArgs e)  // Min text field
         {
-            MessageBox.Show("Min text field used.");
+         
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)   // Add button
         {
-            MessageBox.Show("Add button clicked.");
+            if (dataGridView1.CurrentRow != null)
+            {
+                Part selected = (Part)dataGridView1.CurrentRow.DataBoundItem;
+                associatedParts.Add(selected);
+            }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)    // Save button
         {
-            MessageBox.Show("Save button clicked.");
+            try
+            {
+                Product newProduct = new Product
+                {
+                    ProductID = int.Parse(textBox2.Text),
+                    Name = textBox3.Text,
+                    InStock = int.Parse(textBox4.Text),
+                    Price = decimal.Parse(textBox5.Text),
+                    Max = int.Parse(textBox6.Text),
+                    Min = int.Parse(textBox7.Text)
+                };
+
+                // Add associated parts
+                foreach (Part p in associatedParts)
+                {
+                    newProduct.AddAssociatedPart(p);
+                }
+
+                Program.Inventory.Products.Add(newProduct);
+
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Invalid input. Please check all fields.");
+            }
         }
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)    // Delete button
         {
-            MessageBox.Show("Delete button clicked.");
+            if (dataGridView2.CurrentRow != null)
+            {
+                Part selected = (Part)dataGridView2.CurrentRow.DataBoundItem;
+                associatedParts.Remove(selected);
+            }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)     // Cancel button
         {
-            MessageBox.Show("Cancel button clicked.");
+            this.Close();
         }
-        private void button5_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)    // Search button
         {
-            MessageBox.Show("Search button clicked.");
+            string search = textBox1.Text;
+
+            var results = Program.Inventory.AllParts
+                .Where(p => p.Name.ToLower().Contains(search.ToLower()) ||
+                            p.PartID.ToString() == search)
+                .ToList();
+
+            if (results.Any())
+            {
+                dataGridView1.DataSource = new BindingList<Part>(results);
+            }
+            else
+            {
+                MessageBox.Show("No matching parts found.");
+            }
         }
 
-        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)       // All parts data grid
         {
-            MessageBox.Show("All parts data grid interacted with.");
+            
         }
 
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)      // Parts associated data grid
         {
-            MessageBox.Show("Parts associated data grid interacted with.");
+           
         }
     }
 }

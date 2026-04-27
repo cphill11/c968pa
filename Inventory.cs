@@ -1,12 +1,9 @@
-﻿using Microsoft.SqlServer.Server;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace c968pa
 {
@@ -16,7 +13,8 @@ namespace c968pa
         public BindingList<Product> Products { get; set; } = new BindingList<Product>();
         public BindingList<Part> AllParts { get; set; } = new BindingList<Part>();
 
-        //Product Methods    
+
+        // Product Methods    
         public void AddProduct(Product product)
         {
             Products.Add(product);
@@ -24,7 +22,6 @@ namespace c968pa
 
         public bool RemoveProduct(int productID)
         {
-            //Find Product before able to remove product
             var product = LookupProduct(productID);
             if (product != null)
             {
@@ -37,6 +34,7 @@ namespace c968pa
         {
             return Products.FirstOrDefault(p => p.ProductID == productID);
         }
+
         public void UpdateProduct(int productID, Product updatedProduct)
         {
             for (int i = 0; i < Products.Count; i++)
