@@ -152,7 +152,7 @@ namespace c968pa
 
         private void button10_Click(object sender, EventArgs e)   // Exit page button
         {
-            
+            Application.Exit();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)     // Part search text field
