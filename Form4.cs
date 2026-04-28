@@ -19,8 +19,14 @@ namespace c968pa
         public Form4()   // allows to add product
         {
             InitializeComponent();
-            dataGridView1.DataSource = Program.Inventory.AllParts;
-            dataGridView2.DataSource = associatedParts;
+
+            associatedParts = new BindingList<Part>();
+
+            dataGridView1.AutoGenerateColumns = true;
+            dataGridView2.AutoGenerateColumns = true;
+
+            dataGridView1.DataSource = Program.Inventory.AllParts;       // All Candidate Parts
+            dataGridView2.DataSource = associatedParts;        // Associated Parts
 
         }
 

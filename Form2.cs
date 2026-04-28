@@ -253,12 +253,6 @@ namespace c968pa
             //MessageBox.Show("Data saved.");
         }
 
-
-
-
-
-
-
         private void button2_Click(object sender, EventArgs e)     // Cancel button
         {
             this.Close();
