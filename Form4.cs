@@ -105,7 +105,19 @@ namespace c968pa
             if (dataGridView1.CurrentRow != null)
             {
                 Part selected = (Part)dataGridView1.CurrentRow.DataBoundItem;
-                associatedParts.Add(selected);
+
+                if (!associatedParts.Contains(selected)) // optional: prevent duplicates
+                {
+                    associatedParts.Add(selected);
+                }
+                else
+                {
+                    MessageBox.Show("Part already associated.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a part to add.");
             }
         }
 
@@ -119,40 +131,23 @@ namespace c968pa
                     return;
                 }
 
-                if (currentProduct == null)
+                Product newProduct = new Product
                 {
-                    // ADD MODE
-                    Product newProduct = new Product
-                    {
-                        ProductID = int.Parse(textBox2.Text),
-                        Name = textBox3.Text,
-                        InStock = int.Parse(textBox4.Text),
-                        Price = decimal.Parse(textBox5.Text),
-                        Max = int.Parse(textBox6.Text),
-                        Min = int.Parse(textBox7.Text)
-                    };
+                    ProductID = int.Parse(textBox2.Text),
+                    Name = textBox3.Text,
+                    InStock = int.Parse(textBox4.Text),
+                    Price = decimal.Parse(textBox5.Text),
+                    Max = int.Parse(textBox6.Text),
+                    Min = int.Parse(textBox7.Text)
+                };
 
-                    foreach (Part p in associatedParts)
-                        newProduct.AddAssociatedPart(p);
-
-                    Program.Inventory.Products.Add(newProduct);
-                }
-                else
+                foreach (Part p in associatedParts)
                 {
-                    // MODIFY MODE
-                    currentProduct.Name = textBox3.Text;
-                    currentProduct.InStock = int.Parse(textBox4.Text);
-                    currentProduct.Price = decimal.Parse(textBox5.Text);
-                    currentProduct.Max = int.Parse(textBox6.Text);
-                    currentProduct.Min = int.Parse(textBox7.Text);
-
-                    // Replace associated parts
-                    currentProduct.AssociatedParts.Clear();
-                    foreach (Part p in associatedParts)
-                        currentProduct.AddAssociatedPart(p);
+                    newProduct.AddAssociatedPart(p);
                 }
 
-                MessageBox.Show("Product added successfully.");
+                Program.Inventory.Products.Add(newProduct);
+
                 this.Close();
             }
             catch
@@ -160,12 +155,22 @@ namespace c968pa
                 MessageBox.Show("Invalid input.");
             }
         }
-        private void button3_Click(object sender, EventArgs e)    // Delete button
+        private void button3_Click(object sender, EventArgs e)    // Delete  button
         {
             if (dataGridView2.CurrentRow != null)
             {
                 Part selected = (Part)dataGridView2.CurrentRow.DataBoundItem;
-                associatedParts.Remove(selected);
+
+                if (MessageBox.Show("Remove this associated part?",
+                                    "Confirm",
+                                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    associatedParts.Remove(selected);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a part to remove.");
             }
         }
 
