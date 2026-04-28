@@ -42,6 +42,7 @@ namespace c968pa
 
                 dataGridViewParts.Refresh(); // ensures UI updates
             }
+      
 
         }
 
@@ -74,7 +75,7 @@ namespace c968pa
             {
                 Product selected = (Product)dataGridViewProducts.CurrentRow.DataBoundItem;
 
-                Form4 form = new Form4(selected);
+                Form5 form = new Form5(selected);
                 form.ShowDialog();
 
                 dataGridViewProducts.Refresh();

@@ -15,7 +15,7 @@ namespace c968pa
         private Product currentProduct;
         private BindingList<Part> associatedParts = new BindingList<Part>();
 
-        public Form5()
+        public Form5(Product product)
         {
             InitializeComponent();
 
@@ -78,7 +78,27 @@ namespace c968pa
 
         private void button5_Click(object sender, EventArgs e)    // Search button
         {
+             string search = textBox1.Text.Trim();
 
+             if (string.IsNullOrEmpty(search))
+                {
+                    dataGridView1.DataSource = Program.Inventory.AllParts;
+                    return;
+                }
+
+             var results = Program.Inventory.AllParts
+                .Where(p => p.Name.ToLower().Contains(search.ToLower()) ||
+                    p.PartID.ToString() == search)
+                .ToList();
+
+                if (results.Any())
+                    {
+                        dataGridView1.DataSource = new BindingList<Part>(results);
+                    }
+                else
+                    {
+                        MessageBox.Show("No matching parts found.");
+                    }
         }
 
         private void button1_Click(object sender, EventArgs e)       // Add button
