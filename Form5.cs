@@ -125,34 +125,70 @@ namespace c968pa
 
         private void button3_Click(object sender, EventArgs e)     // Save button
         {
-            try
+            
+            if (associatedParts.Count == 0)       // look for 1+ associated part
             {
-                if (associatedParts.Count == 0)
-                {
-                    MessageBox.Show("Product must have at least one associated part.");
-                    return;
-                }
-
-                // Update existing product
-                currentProduct.Name = textBox3.Text;
-                currentProduct.InStock = int.Parse(textBox4.Text);
-                currentProduct.Price = decimal.Parse(textBox5.Text);
-                currentProduct.Max = int.Parse(textBox6.Text);
-                currentProduct.Min = int.Parse(textBox7.Text);
-
-                // Replace associated parts
-                currentProduct.AssociatedParts.Clear();
-                foreach (Part p in associatedParts)
-                {
-                    currentProduct.AddAssociatedPart(p);
-                }
-
-                this.Close();
+                MessageBox.Show("Product must have at least one associated part.");
+                return;
             }
-            catch
+
+            if (string.IsNullOrWhiteSpace(textBox3.Text))     // Name text box validation
             {
-                MessageBox.Show("Invalid input.");
+                MessageBox.Show("Name cannot be empty.");
+                return;
             }
+
+            if (!int.TryParse(textBox4.Text, out int stock))    // Inventory text box validation
+            {
+                MessageBox.Show("Inventory must be a whole number.");
+                return;
+            }
+
+            if (!decimal.TryParse(textBox5.Text, out decimal price))   // Price text box validation
+            {
+                MessageBox.Show("Price must be a valid number (e.g., 9.99).");
+                return;
+            }
+
+            if (!int.TryParse(textBox6.Text, out int max))      // Max text box validation
+            {
+                MessageBox.Show("Max must be a whole number.");
+                return;
+            }
+
+            if (!int.TryParse(textBox7.Text, out int min))    // Min text box validation
+            {
+                MessageBox.Show("Min must be a whole number.");
+                return;
+            }
+            
+            if (min > max)        // Min vs Max validation
+            {
+                MessageBox.Show("Min cannot be greater than Max.");
+                return;
+            }
+
+            if (stock < min || stock > max)      // Inventory within min and max range validation
+            {
+                MessageBox.Show("Inventory must be between Min and Max.");
+                return;
+            }
+
+            // if validation passes, update
+            currentProduct.Name = textBox3.Text;
+            currentProduct.InStock = stock;
+            currentProduct.Price = price;
+            currentProduct.Max = max;
+            currentProduct.Min = min;
+
+            // Replace associated parts
+            currentProduct.AssociatedParts.Clear();
+            foreach (Part p in associatedParts)
+            {
+                currentProduct.AddAssociatedPart(p);
+            }
+
+            this.Close();
         }
 
         private void button4_Click(object sender, EventArgs e)    // Cancel button

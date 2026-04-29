@@ -73,7 +73,7 @@ namespace c968pa
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)    // search text field
+        private void textBox1_TextChanged(object sender, EventArgs e)    // Search text field
         {
            
         }
