@@ -123,7 +123,8 @@ namespace c968pa
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)     // Save button
+        // Save  button functionality
+        private void button3_Click(object sender, EventArgs e)    
         {
             
             if (associatedParts.Count == 0)       // look for 1+ associated part

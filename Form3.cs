@@ -95,7 +95,8 @@ namespace c968pa
            
         }
 
-        private void button1_Click(object sender, EventArgs e)    // Save button
+        // Save Part Button functionality
+        private void button1_Click(object sender, EventArgs e)   
         {
            
             if (string.IsNullOrWhiteSpace(textBox2.Text))     //  Name text box validation

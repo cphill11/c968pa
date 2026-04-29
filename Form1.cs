@@ -20,8 +20,6 @@ namespace c968pa
             dataGridViewParts.DataSource = Program.Inventory.AllParts;
         }
 
-
-
         private void Form1_Load(object sender, EventArgs e)
         {}
         
@@ -42,8 +40,7 @@ namespace c968pa
 
                 dataGridViewParts.Refresh(); // ensures UI updates
             }
-      
-
+     
         }
 
         private void button3_Click(object sender, EventArgs e)      // Delete part button
@@ -87,20 +84,20 @@ namespace c968pa
 
         private void button6_Click(object sender, EventArgs e)   // Delete product button
         {
-            if (dataGridViewProducts.CurrentRow != null)
+            if (dataGridViewProducts.CurrentRow == null)
             {
-                var confirm = MessageBox.Show(
-                    "Are you sure you want to delete this product?",
-                    "Confirm Delete",
-                    MessageBoxButtons.YesNo);
-
-                if (confirm == DialogResult.Yes)
-                {
-                    Product selected = (Product)dataGridViewProducts.CurrentRow.DataBoundItem;
-                    Program.Inventory.Products.Remove(selected);
-                }
+                MessageBox.Show("Please select a product to delete.");
+                return;
             }
-           
+
+            Product selected = (Product)dataGridViewProducts.CurrentRow.DataBoundItem;
+
+            if (MessageBox.Show("Are you sure you want to delete this product?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Program.Inventory.RemoveProduct(selected.ProductID);
+            }
         }
 
         private void button8_Click(object sender, EventArgs e)   // Part search button
@@ -165,7 +162,7 @@ namespace c968pa
         {
 
         }
-        private void button10_Click(object sender, EventArgs e)   // Exit page button
+        private void button10_Click(object sender, EventArgs e)   // Exit application button
         {
             Application.Exit();
         }
