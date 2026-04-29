@@ -107,38 +107,46 @@ namespace c968pa
 
         private void ValidateMinMax()     // Min vs max validation to ensure data entered are within range
         {
-            // wait for fields to contain data
-            if (string.IsNullOrWhiteSpace(textBox5.Text) || // Max
-                string.IsNullOrWhiteSpace(textBox6.Text) || // Min
-                string.IsNullOrWhiteSpace(textBox3.Text))   // Inventory
+            // Clear errors once at the top
+            errorProvider1.SetError(textBox5, ""); // Max
+            errorProvider1.SetError(textBox6, ""); // Min
+            errorProvider1.SetError(textBox3, ""); // Inventory
+
+            // Wait until all fields have values
+            if (string.IsNullOrWhiteSpace(textBox5.Text) ||
+                string.IsNullOrWhiteSpace(textBox6.Text) ||
+                string.IsNullOrWhiteSpace(textBox3.Text))
             {
-                // Clear errors and exit
-                errorProvider1.SetError(textBox5, "");
-                errorProvider1.SetError(textBox6, "");
-                errorProvider1.SetError(textBox3, "");
                 return;
             }
 
-            // 🔹 Clear existing errors first
-            errorProvider1.SetError(textBox5, "");
-            errorProvider1.SetError(textBox6, "");
-            errorProvider1.SetError(textBox3, "");
+            // Try parsing
+            bool validMax = int.TryParse(textBox5.Text, out int max);
+            bool validMin = int.TryParse(textBox6.Text, out int min);
+            bool validStock = int.TryParse(textBox3.Text, out int stock);
 
-            // 🔹 Now validate
-            if (int.TryParse(textBox5.Text, out int max) &&
-                int.TryParse(textBox6.Text, out int min) &&
-                int.TryParse(textBox3.Text, out int stock))
+            // parsing option validations
+            if (!validMax)
+                errorProvider1.SetError(textBox5, "Max must be a number.");
+
+            if (!validMin)
+                errorProvider1.SetError(textBox6, "Min must be a number.");
+
+            if (!validStock)
+                errorProvider1.SetError(textBox3, "Inventory must be a number.");
+
+            if (!validMax || !validMin || !validStock)     // if parsing fails, stops
+                return;
+
+            if (min > max)
             {
-                if (min > max)
-                {
-                    errorProvider1.SetError(textBox6, "Min cannot be greater than Max.");
-                    errorProvider1.SetError(textBox5, "Max must be greater than or equal to Min.");
-                }
+                errorProvider1.SetError(textBox6, "Min cannot be greater than Max.");
+                errorProvider1.SetError(textBox5, "Max must be greater than or equal to Min.");
+            }
 
-                if (stock < min || stock > max)
-                {
-                    errorProvider1.SetError(textBox3, "Inventory not within Min/Max");
-                }
+            if (stock < min || stock > max)
+            {
+                errorProvider1.SetError(textBox3, "Inventory must be within range of Min and Max values.");
             }
         }
 

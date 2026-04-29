@@ -49,12 +49,12 @@ namespace c968pa
                
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)     // In-house radito button
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)     // Selecting radio button for In-house changes label to "Machine ID"
         {
             label8.Text = "Machine ID";
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)      // Outsource radio button
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)      // Selecing radio buttion for Outsourced changes label to "Company Name"
         {
             label8.Text = "Company Name";
         }

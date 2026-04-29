@@ -106,7 +106,7 @@ namespace c968pa
 
             Product selected = (Product)dataGridViewProducts.CurrentRow.DataBoundItem;
 
-            if (MessageBox.Show("Are you sure you want to delete this product?",
+            if (MessageBox.Show("Are you sure you want to delete this product?",      // confirm deletion 
                 "Confirm Delete",
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
