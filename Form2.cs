@@ -55,100 +55,51 @@ namespace c968pa
 
         private void textBox3_TextChanged(object sender, EventArgs e)      // Inventory text box validation
         {
-            if (!int.TryParse(textBox3.Text, out _))
-            {
-                errorProvider1.SetError(textBox3, "Please enter a number.");
-            }
-            else
-            {
-                errorProvider1.SetError(textBox3, "");
-            }
+            ValidationHelper.TryGetPartValues(
+                textBox3,
+                textBox4,
+                textBox6,
+                textBox5,
+                errorProvider1,
+                out _, out _, out _, out _);
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)     // Price or cost text box validation
         {
-            if (!decimal.TryParse(textBox4.Text, out _))
-            {
-                errorProvider1.SetError(textBox4, "Please enter a number.");
-            }
-            else
-            {
-                errorProvider1.SetError(textBox4, "");
-            }
+
+            ValidationHelper.TryGetPartValues(
+                textBox3,
+                textBox4,
+                textBox6,
+                textBox5,
+                errorProvider1,
+                out _, out _, out _, out _);
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)    // Max text box validation
         {
-            if (!int.TryParse(textBox5.Text, out _))
-            {
-                errorProvider1.SetError(textBox5, "Please enter a number.");
-            }
-            else
-            {
-                errorProvider1.SetError(textBox5, "");
-            }
 
-            ValidateMinMax();
+            ValidationHelper.TryGetPartValues(
+                textBox3,
+                textBox4,
+                textBox6,
+                textBox5,
+                errorProvider1,
+                out _, out _, out _, out _);
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)     // Min text box validation
         {
-            if (!int.TryParse(textBox6.Text, out _))
-            {
-                errorProvider1.SetError(textBox6, "Please enter a number.");
-            }
-            else
-            {
-                errorProvider1.SetError(textBox6, "");
-            }
 
-            ValidateMinMax();
+            ValidationHelper.TryGetPartValues(
+                textBox3,
+                textBox4,
+                textBox6,
+                textBox5,
+                errorProvider1,
+                out _, out _, out _, out _);
         }
-
-        private void ValidateMinMax()     // Min vs max validation to ensure data entered are within range
-        {
-            // Clear errors once at the top
-            errorProvider1.SetError(textBox5, ""); // Max
-            errorProvider1.SetError(textBox6, ""); // Min
-            errorProvider1.SetError(textBox3, ""); // Inventory
-
-            // Wait until all fields have values
-            if (string.IsNullOrWhiteSpace(textBox5.Text) ||
-                string.IsNullOrWhiteSpace(textBox6.Text) ||
-                string.IsNullOrWhiteSpace(textBox3.Text))
-            {
-                return;
-            }
-
-            // Try parsing
-            bool validMax = int.TryParse(textBox5.Text, out int max);
-            bool validMin = int.TryParse(textBox6.Text, out int min);
-            bool validStock = int.TryParse(textBox3.Text, out int stock);
-
-            // parsing option validations
-            if (!validMax)
-                errorProvider1.SetError(textBox5, "Max must be a number.");
-
-            if (!validMin)
-                errorProvider1.SetError(textBox6, "Min must be a number.");
-
-            if (!validStock)
-                errorProvider1.SetError(textBox3, "Inventory must be a number.");
-
-            if (!validMax || !validMin || !validStock)     // if parsing fails, stops
-                return;
-
-            if (min > max)
-            {
-                errorProvider1.SetError(textBox6, "Min cannot be greater than Max.");
-                errorProvider1.SetError(textBox5, "Max must be greater than or equal to Min.");
-            }
-
-            if (stock < min || stock > max)
-            {
-                errorProvider1.SetError(textBox3, "Inventory must be within range of Min and Max values.");
-            }
-        }
+             
 
         private void textBox7_TextChanged(object sender, EventArgs e)        // Machine ID Or Company Name text box validations
         {
@@ -178,90 +129,77 @@ namespace c968pa
         }
 
         private void button1_Click(object sender, EventArgs e)           //Save part button
+        
         {
-            try
+            if (string.IsNullOrWhiteSpace(textBox2.Text))     // Name validation
             {
-                string name = textBox2.Text;
-                decimal price = decimal.Parse(textBox4.Text);
-                int stock = int.Parse(textBox3.Text);
-                int min = int.Parse(textBox6.Text);
-                int max = int.Parse(textBox5.Text);
-
-                //Validation
-                if (string.IsNullOrWhiteSpace(name))        // Name text box validation
-                {
-                    MessageBox.Show("Name cannot be empty.");
-                    return;
-                }
-
-                if (min > max)           // Evaluate Min & Max entry values
-                {
-                    MessageBox.Show("Minimum value cannot be greater than Maximum value.");
-                    return;
-                }
-
-                if (stock < min || stock > max)
-                {
-                    MessageBox.Show("Inventory stock level must be between minimum value and maximum value.");
-                    return;
-                }
-
-                Part newPart;
-
-                int newID = Program.Inventory.AllParts.Count + 1;
-
-                if (radioButton1.Checked) // InHouse
-                {
-                    int machineID;
-
-                    if (!int.TryParse(textBox7.Text, out machineID))
-                    {
-                        MessageBox.Show("Machine ID must be a number.");
-                        return;
-                    }
-
-                    newPart = new InHouse
-                    {
-                        PartID = newID,    // auto generated ID
-                        Name = name,
-                        Price = price,
-                        InStock = stock,
-                        Min = min,
-                        Max = max,
-                        MachineID = machineID 
-                    };
-                }
-                else // Outsourced
-                {
-                    string company = textBox7.Text;
-
-                    if (string.IsNullOrWhiteSpace(company))          // Company Name validation
-                    {
-                        MessageBox.Show("Company Name cannot be empty.");
-                        return;
-                    }
-
-                    newPart = new Outsourced
-                    {
-                        PartID = newID,       // auto generated ID
-                        Name = name,
-                        Price = price,
-                        InStock = stock,
-                        Min = min,
-                        Max = max,
-                        CompanyName = textBox7.Text
-                    };
-                }
-
-                Program.Inventory.AllParts.Add(newPart);
-
-                this.Close();
+                MessageBox.Show("Name cannot be empty.");     
+                return;
             }
-            catch
+
+            // uses ValidationHelper.cs
+            if (!ValidationHelper.TryGetPartValues(
+                textBox3, // Inventory
+                textBox4, // Price
+                textBox6, // Min
+                textBox5, // Max
+                errorProvider1,
+                out int stock,
+                out decimal price,
+                out int min,
+                out int max))
             {
-                MessageBox.Show("Invalid data input.  Please review fields.");
+                return;
             }
+
+            Part newPart;
+
+            int newID = Program.Inventory.AllParts.Count + 1;
+
+            if (radioButton1.Checked) // InHouse
+            {
+                if (!int.TryParse(textBox7.Text, out int machineID))    // Machine ID validation
+                {
+                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");
+                    return;
+                }
+
+                newPart = new InHouse
+                {
+                    PartID = newID,
+                    Name = textBox2.Text,
+                    Price = price,
+                    InStock = stock,
+                    Min = min,
+                    Max = max,
+                    MachineID = machineID
+                };
+            }
+            else // Outsourced
+            {
+                if (string.IsNullOrWhiteSpace(textBox7.Text))     // Company Name validation
+                {
+                    errorProvider1.SetError(textBox7, "Company Name cannot be empty.");
+                    return;
+                }
+
+                newPart = new Outsourced
+                {
+                    PartID = newID,
+                    Name = textBox2.Text,
+                    Price = price,
+                    InStock = stock,
+                    Min = min,
+                    Max = max,
+                    CompanyName = textBox7.Text
+                };
+            }
+
+            Program.Inventory.AddPart(newPart);
+
+            this.Close();
         }
+
 
         private void button2_Click(object sender, EventArgs e)     // Cancel button
         {
