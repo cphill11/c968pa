@@ -22,7 +22,7 @@ namespace c968pa
             Application.SetCompatibleTextRenderingDefault(false);
 
 
-            //Test Code
+            //Seed data for demo purposes
 
             Program.Inventory.AllParts.Add(new InHouse
             {

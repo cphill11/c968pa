@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace c968pa
 {
-    public static class ValidationHelper
+    public static class ValidationHelper      // all numeric validation
     {
         public static bool TryGetProductValues(     // make form controls reusable across all product forms
             TextBox txtStock,
