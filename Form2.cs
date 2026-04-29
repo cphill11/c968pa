@@ -11,11 +11,13 @@ using System.Windows.Forms;
 
 namespace c968pa
 {
-    public partial class Form2 : Form
+    public partial class Form2 : Form      // Add Part form
     {
         public Form2()
         {
             InitializeComponent();
+            textBox1.Enabled = false;    // prevent user from entering ID data manually
+            textBox1.Text = (Program.Inventory.AllParts.Count + 1).ToString();
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)    // Selecting radio button for In-house changes label to "Machine ID"
@@ -167,19 +169,24 @@ namespace c968pa
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)           //Save button
+        private void button1_Click(object sender, EventArgs e)           //Save part button
         {
             try
             {
-                int id = int.Parse(textBox1.Text);
                 string name = textBox2.Text;
                 decimal price = decimal.Parse(textBox4.Text);
                 int stock = int.Parse(textBox3.Text);
                 int min = int.Parse(textBox6.Text);
                 int max = int.Parse(textBox5.Text);
 
-                //Validation logic
-                if (min > max)
+                //Validation
+                if (string.IsNullOrWhiteSpace(name))        // Name text box validation
+                {
+                    MessageBox.Show("Name cannot be empty.");
+                    return;
+                }
+
+                if (min > max)           // Evaluate Min & Max entry values
                 {
                     MessageBox.Show("Minimum value cannot be greater than Maximum value.");
                     return;
@@ -191,13 +198,9 @@ namespace c968pa
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(name))
-                    {
-                    MessageBox.Show("Name cannot be empty.");
-                    return;
-                }
-
                 Part newPart;
+
+                int newID = Program.Inventory.AllParts.Count + 1;
 
                 if (radioButton1.Checked) // InHouse
                 {
@@ -211,20 +214,20 @@ namespace c968pa
 
                     newPart = new InHouse
                     {
-                        PartID = id,
+                        PartID = newID,    // auto generated ID
                         Name = name,
                         Price = price,
                         InStock = stock,
                         Min = min,
                         Max = max,
-                        MachineID = int.Parse(textBox7.Text)
+                        MachineID = machineID 
                     };
                 }
                 else // Outsourced
                 {
                     string company = textBox7.Text;
 
-                    if (string.IsNullOrWhiteSpace(company))
+                    if (string.IsNullOrWhiteSpace(company))          // Company Name validation
                     {
                         MessageBox.Show("Company Name cannot be empty.");
                         return;
@@ -232,7 +235,7 @@ namespace c968pa
 
                     newPart = new Outsourced
                     {
-                        PartID = id,
+                        PartID = newID,       // auto generated ID
                         Name = name,
                         Price = price,
                         InStock = stock,

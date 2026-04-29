@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace c968pa
 {
-    public partial class Form5 : Form
+    public partial class Form5 : Form        // Modify Product form
     {
         private Product currentProduct;
         private BindingList<Part> associatedParts = new BindingList<Part>();
@@ -21,7 +21,7 @@ namespace c968pa
 
             currentProduct = product;
 
-            // Copy associated parts (IMPORTANT)
+            // Copy associated parts
             associatedParts = new BindingList<Part>(product.AssociatedParts.ToList());
 
             // Bind grids

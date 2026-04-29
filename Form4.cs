@@ -20,6 +20,9 @@ namespace c968pa
         {
             InitializeComponent();
 
+            textBox2.Enabled = false; // prevent user from entering ID data manually
+            textBox2.Text = (Program.Inventory.Products.Count + 1).ToString();
+
             associatedParts = new BindingList<Part>();
 
             dataGridView1.AutoGenerateColumns = true;
@@ -137,9 +140,27 @@ namespace c968pa
                     return;
                 }
 
+                int min = int.Parse(textBox7.Text);
+                int max = int.Parse(textBox6.Text);
+                int stock = int.Parse(textBox4.Text);
+
+                if (min > max)        // validate min vs max values before saving
+                {
+                    MessageBox.Show("Min cannot be greater than Max.");
+                    return;
+                }
+
+                if (stock < min || stock > max)    // validate inventory levels before saving
+                {
+                    MessageBox.Show("Inventory must be between Min and Max.");
+                    return;
+                }
+
+
+
                 Product newProduct = new Product
                 {
-                    ProductID = int.Parse(textBox2.Text),
+                    ProductID = Program.Inventory.Products.Count + 1,    // control ID 
                     Name = textBox3.Text,
                     InStock = int.Parse(textBox4.Text),
                     Price = decimal.Parse(textBox5.Text),

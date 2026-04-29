@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace c968pa
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form      // Main screen form
     {
         public Form1()
         {

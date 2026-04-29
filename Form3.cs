@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace c968pa
 {
-    public partial class Form3 : Form
+    public partial class Form3 : Form      // Modify Part form
     {
         private Part currentPart;
 
