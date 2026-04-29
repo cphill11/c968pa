@@ -45,18 +45,32 @@ namespace c968pa
 
         private void button3_Click(object sender, EventArgs e)      // Delete part button
         {
-            if (dataGridViewParts.CurrentRow != null)
+            if (dataGridViewParts.CurrentRow == null)
             {
-                var confirm = MessageBox.Show(
-                    "Are you sure you want to delete this part?",
-                    "Confirm Delete",
-                    MessageBoxButtons.YesNo);
+                MessageBox.Show("Please select a part to delete.");
+                return;
+            }
 
-                if (confirm == DialogResult.Yes)
+            Part selected = (Part)dataGridViewParts.CurrentRow.DataBoundItem;
+
+            // Check ALL products for this part prior to deletion
+            foreach (Product product in Program.Inventory.Products)
+            {
+                foreach (Part p in product.AssociatedParts)
                 {
-                    Part selected = (Part)dataGridViewParts.CurrentRow.DataBoundItem;
-                    Program.Inventory.AllParts.Remove(selected);
+                    if (p.PartID == selected.PartID)    // compare ID to verify
+                    {
+                        MessageBox.Show("Cannot delete this part. It is associated with a product.");
+                        return;
+                    }
                 }
+            }
+
+            if (MessageBox.Show("Are you sure you want to delete this part?",  // additional confirmation
+                "Confirm Delete",
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Program.Inventory.DeletePart(selected);
             }
         }
 
