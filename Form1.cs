@@ -65,8 +65,11 @@ namespace c968pa
 
         private void button4_Click(object sender, EventArgs e)     // Add product button
         {
-            Form4 form = new Form4();  // Add mode (no parameter)
+            Form4 form = new Form4();  
             form.ShowDialog();
+
+            dataGridViewProducts.DataSource = null;
+            dataGridViewProducts.DataSource = Program.Inventory.Products;
         }
 
         private void button5_Click(object sender, EventArgs e)   // Modify product button
@@ -104,6 +107,14 @@ namespace c968pa
         {
             string search = textBox1.Text.Trim();
 
+            // Check to see if search is empty, will reset if empty
+            if (string.IsNullOrEmpty(search))
+            {
+                dataGridViewParts.DataSource = Program.Inventory.AllParts;
+                return;
+            }
+
+            // allow search
             var results = Program.Inventory.AllParts
                 .Where(p => p.Name.ToLower().Contains(search.ToLower()) ||
                             p.PartID.ToString() == search)
@@ -117,12 +128,11 @@ namespace c968pa
             {
                 MessageBox.Show("No matching parts found.");
             }
+        }
 
-            if (string.IsNullOrEmpty(search))
-            {
-                dataGridViewParts.DataSource = Program.Inventory.AllParts;
-                return;
-            }
+        private void textBox1_TextChanged(object sender, EventArgs e)     // Part search text field
+        {
+
         }
 
         private void button9_Click(object sender, EventArgs e)     // Product search button
@@ -150,19 +160,14 @@ namespace c968pa
             }
         }
 
-        private void button10_Click(object sender, EventArgs e)   // Exit page button
-        {
-            Application.Exit();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)     // Part search text field
-        {
-            
-        }
 
         private void textBox2_TextChanged(object sender, EventArgs e)    // Product search text field
         {
-           
+
+        }
+        private void button10_Click(object sender, EventArgs e)   // Exit page button
+        {
+            Application.Exit();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)     // Part data grid

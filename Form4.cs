@@ -106,7 +106,7 @@ namespace c968pa
         }
 
 
-        private void button1_Click(object sender, EventArgs e)   // Add button
+        private void button1_Click(object sender, EventArgs e)   // Add product button
         {
             if (dataGridView1.CurrentRow != null)
             {
@@ -127,7 +127,7 @@ namespace c968pa
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)    // Save button
+        private void button2_Click(object sender, EventArgs e)    // Save product button
         {
             try
             {
