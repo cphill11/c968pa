@@ -18,13 +18,13 @@ namespace c968pa
             InitializeComponent();
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)    // Selecting radio button for In-house changes label to "Machine ID"
         {
            lblDynamic.Text = "Machine ID";
            
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)    // Selecing radio buttion for Outsourced changes label to "Company Name"
         {
             lblDynamic.Text = "Company Name";
            
@@ -41,7 +41,7 @@ namespace c968pa
 
             if (string.IsNullOrWhiteSpace(textBox2.Text))
             {
-                errorProvider1.SetError(textBox2, "Name cannot be empty");
+                errorProvider1.SetError(textBox2, "Name cannot be empty.");
             }
             else
             {
@@ -51,11 +51,11 @@ namespace c968pa
 
 
 
-        private void textBox3_TextChanged(object sender, EventArgs e)      // Inventory text box
+        private void textBox3_TextChanged(object sender, EventArgs e)      // Inventory text box validation
         {
             if (!int.TryParse(textBox3.Text, out _))
             {
-                errorProvider1.SetError(textBox3, "Invalid inventory value");
+                errorProvider1.SetError(textBox3, "Please enter a number.");
             }
             else
             {
@@ -63,11 +63,11 @@ namespace c968pa
             }
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)     // Price or cost text box
+        private void textBox4_TextChanged(object sender, EventArgs e)     // Price or cost text box validation
         {
             if (!decimal.TryParse(textBox4.Text, out _))
             {
-                errorProvider1.SetError(textBox4, "Invalid price");
+                errorProvider1.SetError(textBox4, "Please enter a number.");
             }
             else
             {
@@ -75,11 +75,11 @@ namespace c968pa
             }
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)    // Max text box
+        private void textBox5_TextChanged(object sender, EventArgs e)    // Max text box validation
         {
             if (!int.TryParse(textBox5.Text, out _))
             {
-                errorProvider1.SetError(textBox5, "Max must be a number");
+                errorProvider1.SetError(textBox5, "Please enter a number.");
             }
             else
             {
@@ -89,11 +89,11 @@ namespace c968pa
             ValidateMinMax();
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e)     // Min text box
+        private void textBox6_TextChanged(object sender, EventArgs e)     // Min text box validation
         {
             if (!int.TryParse(textBox6.Text, out _))
             {
-                errorProvider1.SetError(textBox6, "Min must be a number");
+                errorProvider1.SetError(textBox6, "Please enter a number.");
             }
             else
             {
@@ -103,9 +103,9 @@ namespace c968pa
             ValidateMinMax();
         }
 
-        private void ValidateMinMax()
+        private void ValidateMinMax()     // Min vs max validation to ensure data entered are within range
         {
-            // 🔹 If required fields are empty, don't validate yet
+            // wait for fields to contain data
             if (string.IsNullOrWhiteSpace(textBox5.Text) || // Max
                 string.IsNullOrWhiteSpace(textBox6.Text) || // Min
                 string.IsNullOrWhiteSpace(textBox3.Text))   // Inventory
@@ -129,8 +129,8 @@ namespace c968pa
             {
                 if (min > max)
                 {
-                    errorProvider1.SetError(textBox6, "Min cannot be greater than Max");
-                    errorProvider1.SetError(textBox5, "Max must be ≥ Min");
+                    errorProvider1.SetError(textBox6, "Min cannot be greater than Max.");
+                    errorProvider1.SetError(textBox5, "Max must be greater than or equal to Min.");
                 }
 
                 if (stock < min || stock > max)
@@ -140,14 +140,14 @@ namespace c968pa
             }
         }
 
-        private void textBox7_TextChanged(object sender, EventArgs e)        // Machine ID Or Company Name text box
+        private void textBox7_TextChanged(object sender, EventArgs e)        // Machine ID Or Company Name text box validations
         {
 
             if (radioButton1.Checked) // InHouse
             {
-                if (!int.TryParse(textBox7.Text, out _))
+                if (!int.TryParse(textBox7.Text, out _))    // Machine ID text box validation
                 {
-                    errorProvider1.SetError(textBox7, "Machine ID must be a number");
+                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");
                 }
                 else
                 {
@@ -156,9 +156,9 @@ namespace c968pa
             }
             else // Outsourced
             {
-                if (string.IsNullOrWhiteSpace(textBox7.Text))
+                if (string.IsNullOrWhiteSpace(textBox7.Text))     // Company Name text box validation
                 {
-                    errorProvider1.SetError(textBox7, "Company Name required");
+                    errorProvider1.SetError(textBox7, "Company Name required.");
                 }
                 else
                 {
@@ -250,7 +250,6 @@ namespace c968pa
             {
                 MessageBox.Show("Invalid data input.  Please review fields.");
             }
-            //MessageBox.Show("Data saved.");
         }
 
         private void button2_Click(object sender, EventArgs e)     // Cancel button
