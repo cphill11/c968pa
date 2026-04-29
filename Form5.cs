@@ -197,8 +197,6 @@ namespace c968pa
         }
 
 
-
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)     // All candidate parts data grid
         {
             
@@ -206,9 +204,8 @@ namespace c968pa
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)   // Parts associated with product data grid
         {
-      
-        }
 
+        }
 
     }
 }
