@@ -144,39 +144,17 @@ namespace c968pa
                 return;
             }
 
-            if (!int.TryParse(textBox4.Text, out int stock))    // Inventory text box validation
+            if (!ValidationHelper.TryGetProductValues(
+             textBox4, // Inventory
+             textBox5, // Price
+             textBox7, // Min
+             textBox6, // Max
+             errorProvider1,
+             out int stock,
+             out decimal price,
+             out int min,
+             out int max))
             {
-                MessageBox.Show("Inventory must be a whole number.");
-                return;
-            }
-
-            if (!decimal.TryParse(textBox5.Text, out decimal price))    // Price text box validation
-            {
-                MessageBox.Show("Price must be a valid number (e.g., 9.99).");
-                return;
-            }
-
-            if (!int.TryParse(textBox6.Text, out int max))    // Max text box validation
-            {
-                MessageBox.Show("Max must be a whole number.");
-                return;
-            }
-
-            if (!int.TryParse(textBox7.Text, out int min))        // Min text box validation
-            {
-                MessageBox.Show("Min must be a whole number.");
-                return;
-            }
-
-            if (min > max)         // Min vs Max validation
-            {
-                MessageBox.Show("Min cannot be greater than Max.");
-                return;
-            }
-
-            if (stock < min || stock > max)    // Inventory within min and max range validation
-            {
-                MessageBox.Show("Inventory must be between Min and Max.");
                 return;
             }
 
