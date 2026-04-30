@@ -23,13 +23,13 @@ namespace c968pa
         private void Form1_Load(object sender, EventArgs e)
         {}
         
-        private void button1_Click(object sender, EventArgs e)       // Add part button
+        private void button1_Click(object sender, EventArgs e)       // Add Part button, takes user to Add Part form
         {
             Form2 addPartForm = new Form2();
             addPartForm.ShowDialog();
         }
 
-        private void button2_Click(object sender, EventArgs e)    // Modify part button
+        private void button2_Click(object sender, EventArgs e)    // Modify Part button, takes user to Modify Part form
         {
             if (dataGridViewParts.CurrentRow != null)
             {
@@ -74,7 +74,7 @@ namespace c968pa
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)     // Add product button
+        private void button4_Click(object sender, EventArgs e)     // Add Product button, takes user to Add Product form 
         {
             Form4 form = new Form4();  
             form.ShowDialog();
@@ -83,7 +83,7 @@ namespace c968pa
             dataGridViewProducts.DataSource = Program.Inventory.Products;
         }
 
-        private void button5_Click(object sender, EventArgs e)   // Modify product button
+        private void button5_Click(object sender, EventArgs e)   // Modify Product button, takes user to Modify Project form
         {
             if (dataGridViewProducts.CurrentRow != null)
             {
@@ -183,12 +183,12 @@ namespace c968pa
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)     // Part data grid
         {
-          
+
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)    // Product data grid
         {
-            
+
         }
     }
 }
