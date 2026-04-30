@@ -43,7 +43,7 @@ namespace c968pa
 
             if (string.IsNullOrWhiteSpace(textBox2.Text))
             {
-                errorProvider1.SetError(textBox2, "Name cannot be empty.");
+                errorProvider1.SetError(textBox2, "Name cannot be empty.");  // provide visual feedback to user
             }
             else
             {
@@ -56,11 +56,11 @@ namespace c968pa
         private void textBox3_TextChanged(object sender, EventArgs e)      // Inventory text box validation
         {
             ValidationHelper.TryGetPartValues(
-                textBox3,
-                textBox4,
-                textBox6,
-                textBox5,
-                errorProvider1,
+                textBox3, // Inventory
+                textBox4, // Price
+                textBox6, // Min
+                textBox5, // Max
+                errorProvider1,                // provide visual feedback to user
                 out _, out _, out _, out _);
         }
 
@@ -68,11 +68,11 @@ namespace c968pa
         {
 
             ValidationHelper.TryGetPartValues(
-                textBox3,
-                textBox4,
-                textBox6,
-                textBox5,
-                errorProvider1,
+                textBox3,  // Inventory
+                textBox4,  // Price
+                textBox6,  // Min
+                textBox5,  // Max
+                errorProvider1,                    // provide visual feedback to user
                 out _, out _, out _, out _);
         }
 
@@ -80,11 +80,11 @@ namespace c968pa
         {
 
             ValidationHelper.TryGetPartValues(
-                textBox3,
-                textBox4,
-                textBox6,
-                textBox5,
-                errorProvider1,
+                textBox3, // Inventory
+                textBox4, // Price
+                textBox6, // Min
+                textBox5, // Max
+                errorProvider1,                 // provide visual feedback to user
                 out _, out _, out _, out _);
         }
 
@@ -92,11 +92,11 @@ namespace c968pa
         {
 
             ValidationHelper.TryGetPartValues(
-                textBox3,
-                textBox4,
-                textBox6,
-                textBox5,
-                errorProvider1,
+                textBox3,  // Inventory
+                textBox4, // Price
+                textBox6,  // Min
+                textBox5,  // Max
+                errorProvider1,                // provide visual feedback to user
                 out _, out _, out _, out _);
         }
              
@@ -106,9 +106,9 @@ namespace c968pa
 
             if (radioButton1.Checked) // InHouse
             {
-                if (!int.TryParse(textBox7.Text, out _))    // Machine ID text box validation
+                if (!int.TryParse(textBox7.Text, out _))    // Machine ID text box validation; TryParse method used to validate input in code instead of allowing code to throw exceptions
                 {
-                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");
+                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");            // provide visual feedback to user
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace c968pa
             {
                 if (string.IsNullOrWhiteSpace(textBox7.Text))     // Company Name text box validation
                 {
-                    errorProvider1.SetError(textBox7, "Company Name required.");
+                    errorProvider1.SetError(textBox7, "Company Name required.");            // provide visual feedback to user
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace c968pa
         {
             if (string.IsNullOrWhiteSpace(textBox2.Text))     // Name validation
             {
-                MessageBox.Show("Name cannot be empty.");     
+                MessageBox.Show("Name cannot be empty.");           // provide visual feedback to user
                 return;
             }
 
@@ -143,7 +143,7 @@ namespace c968pa
                 textBox4, // Price
                 textBox6, // Min
                 textBox5, // Max
-                errorProvider1,
+                errorProvider1,               // provide visual feedback to user    
                 out int stock,
                 out decimal price,
                 out int min,
@@ -158,9 +158,9 @@ namespace c968pa
 
             if (radioButton1.Checked) // InHouse
             {
-                if (!int.TryParse(textBox7.Text, out int machineID))    // Machine ID validation
+                if (!int.TryParse(textBox7.Text, out int machineID))    // Machine ID validation; TryParse method used to validate input in code instead of allowing code to throw exceptions
                 {
-                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");
+                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");          // provide visual feedback to user
                     return;
                 }
 
@@ -179,7 +179,7 @@ namespace c968pa
             {
                 if (string.IsNullOrWhiteSpace(textBox7.Text))     // Company Name validation
                 {
-                    errorProvider1.SetError(textBox7, "Company Name cannot be empty.");
+                    errorProvider1.SetError(textBox7, "Company Name cannot be empty.");          // provide visual feedback to user
                     return;
                 }
 

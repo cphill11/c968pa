@@ -36,10 +36,9 @@ namespace c968pa
             textBox6.Text = product.Max.ToString();
             textBox7.Text = product.Min.ToString();
 
-            // Disable ID editing
-            textBox2.Enabled = false;
+            textBox2.Enabled = false;      // prevent user from entering ID data manually
 
-            this.Text = "Modify Product";
+            this.Text = "Modify Product";        
         }
         private void textBox1_TextChanged(object sender, EventArgs e)   // Search text field
         {
@@ -97,8 +96,8 @@ namespace c968pa
                     }
                 else
                     {
-                        MessageBox.Show("No matching parts found.");
-                    }
+                        MessageBox.Show("No matching parts found.");      // provide visual feedback to user
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)       // Add button
@@ -116,7 +115,7 @@ namespace c968pa
             {
                 Part selected = (Part)dataGridView2.CurrentRow.DataBoundItem;
 
-                if (MessageBox.Show("Remove this part?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Remove this part?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)    // provide visual feedback to user
                 {
                     associatedParts.Remove(selected);
                 }
@@ -128,13 +127,13 @@ namespace c968pa
         {
             if (currentProduct == null)
             {
-                MessageBox.Show("No product loaded.");
+                MessageBox.Show("No product loaded.");            // provide visual feedback to user
                 return;
             }
 
             if (associatedParts.Count == 0)
             {
-                MessageBox.Show("Product must have at least one associated part.");     
+                MessageBox.Show("Product must have at least one associated part.");     // provide visual feedback to user
                 return;
             }
 

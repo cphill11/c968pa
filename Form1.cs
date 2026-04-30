@@ -47,7 +47,7 @@ namespace c968pa
         {
             if (dataGridViewParts.CurrentRow == null)
             {
-                MessageBox.Show("Please select a part to delete.");
+                MessageBox.Show("Please select a part to delete.");                   // provide visual feedback to user
                 return;
             }
 
@@ -60,13 +60,13 @@ namespace c968pa
                 {
                     if (p.PartID == selected.PartID)    // compare ID to verify
                     {
-                        MessageBox.Show("Cannot delete this part. It is associated with a product.");
+                        MessageBox.Show("Cannot delete this part. It is associated with a product.");        // provide visual feedback to user
                         return;
                     }
                 }
             }
 
-            if (MessageBox.Show("Are you sure you want to delete this part?",  // additional confirmation
+            if (MessageBox.Show("Are you sure you want to delete this part?",  // additional confirmation; visual feedback provided to user
                 "Confirm Delete",
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -100,13 +100,13 @@ namespace c968pa
         {
             if (dataGridViewProducts.CurrentRow == null)
             {
-                MessageBox.Show("Please select a product to delete.");
+                MessageBox.Show("Please select a product to delete.");          // provide visual feedback to user
                 return;
             }
 
             Product selected = (Product)dataGridViewProducts.CurrentRow.DataBoundItem;
 
-            if (MessageBox.Show("Are you sure you want to delete this product?",      // confirm deletion 
+            if (MessageBox.Show("Are you sure you want to delete this product?",      // confirm deletion, visual feedback provided to user
                 "Confirm Delete",
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -118,7 +118,7 @@ namespace c968pa
         {
             string search = textBox1.Text.Trim();
 
-            // Check to see if search is empty, will reset if empty
+            // Check to see if search is empty, will reset if search is empty
             if (string.IsNullOrEmpty(search))
             {
                 dataGridViewParts.DataSource = Program.Inventory.AllParts;
@@ -137,7 +137,7 @@ namespace c968pa
             }
             else
             {
-                MessageBox.Show("No matching parts found.");
+                MessageBox.Show("No matching parts found.");      // provide visual feedback to user
             }
         }
 
@@ -161,7 +161,7 @@ namespace c968pa
             }
             else
             {
-                MessageBox.Show("No matching products found.");
+                MessageBox.Show("No matching products found.");             // provide visual feedback to user
             }
 
             if (string.IsNullOrEmpty(search))

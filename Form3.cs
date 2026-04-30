@@ -100,14 +100,14 @@ namespace c968pa
         {
             if (currentPart == null)
             {
-                MessageBox.Show("No part loaded.");
+                MessageBox.Show("No part loaded.");        // provide visual feedback to user
                 return;
             }
 
             // Name validation
-            if (string.IsNullOrWhiteSpace(textBox2.Text))
+            if (string.IsNullOrWhiteSpace(textBox2.Text))     // Name text box validation
             {
-                MessageBox.Show("Name cannot be empty.");      // Name text box validation
+                MessageBox.Show("Name cannot be empty.");      // provide visual feedback to user
                 return;
             }
 
@@ -117,7 +117,7 @@ namespace c968pa
                 textBox4, // Price
                 textBox6, // Min
                 textBox5, // Max
-                errorProvider1,
+                errorProvider1,                         // provide visual feedback to user
                 out int stock,
                 out decimal price,
                 out int min,
@@ -126,29 +126,29 @@ namespace c968pa
                 return;
             }
 
-            // 🔧 Type-specific validation
-            if (radioButton1.Checked && currentPart is InHouse inHouse)
+          
+            if (radioButton1.Checked && currentPart is InHouse inHouse)        // Machine ID validation when using InHouse radio button
             {
-                if (!int.TryParse(textBox7.Text, out int machineID))
+                if (!int.TryParse(textBox7.Text, out int machineID))      // TryParse method used to validate input in code instead of allowing code to throw exceptions
                 {
-                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");
+                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");        // provide visual feedback to user
                     return;
                 }
 
                 inHouse.MachineID = machineID;
             }
-            else if (radioButton2.Checked && currentPart is Outsourced outsourced)
+            else if (radioButton2.Checked && currentPart is Outsourced outsourced)         // Company Name validation when using Outsourced radio button
             {
                 if (string.IsNullOrWhiteSpace(textBox7.Text))
                 {
-                    errorProvider1.SetError(textBox7, "Company Name cannot be empty.");
+                    errorProvider1.SetError(textBox7, "Company Name cannot be empty.");         // provide visual feedback to user
                     return;
                 }
 
                 outsourced.CompanyName = textBox7.Text;
             }
 
-            // ✅ Update AFTER validation passes
+            // If validation passes, update
             currentPart.Name = textBox2.Text;
             currentPart.InStock = stock;
             currentPart.Price = price;

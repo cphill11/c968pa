@@ -14,7 +14,7 @@ namespace c968pa
             TextBox txtPrice,
             TextBox txtMin,
             TextBox txtMax,
-            ErrorProvider errorProvider,
+            ErrorProvider errorProvider,       // provide visual feedback to user
             out int stock,
             out decimal price,
             out int min,
@@ -27,6 +27,8 @@ namespace c968pa
 
             errorProvider.Clear();
             bool valid = true;
+
+            // TryParse methods used to validate input in code instead of allowing code to throw exceptions
 
             if (!int.TryParse(txtStock.Text, out stock))       // Inventory validation
             {

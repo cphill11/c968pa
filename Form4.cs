@@ -54,7 +54,7 @@ namespace c968pa
             textBox7.Text = product.Min.ToString();
 
             // Lock ID
-            textBox2.Enabled = false;
+            textBox2.Enabled = false;     // prevent user from entering ID data manually
 
         }
 
@@ -115,18 +115,18 @@ namespace c968pa
             {
                 Part selected = (Part)dataGridView1.CurrentRow.DataBoundItem;
 
-                if (!associatedParts.Contains(selected)) // optional: prevent duplicates
+                if (!associatedParts.Contains(selected)) // prevent duplicates
                 {
                     associatedParts.Add(selected);
                 }
                 else
                 {
-                    MessageBox.Show("Part already associated.");
+                    MessageBox.Show("Part already associated.");   // provide visual feedback to user
                 }
             }
             else
             {
-                MessageBox.Show("Please select a part to add.");
+                MessageBox.Show("Please select a part to add.");          // provide visual feedback to user
             }
         }
 
@@ -134,13 +134,13 @@ namespace c968pa
         {
             if (associatedParts.Count == 0)         // requires 1+ selected part
             {
-                MessageBox.Show("Product must have at least one associated part.");
+                MessageBox.Show("Product must have at least one associated part.");      // provide visual feedback to user
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(textBox3.Text))     // Name text box validation
             {
-                MessageBox.Show("Name cannot be empty.");
+                MessageBox.Show("Name cannot be empty.");       // provide visual feedback to user
                 return;
             }
 
@@ -184,7 +184,7 @@ namespace c968pa
             {
                 Part selected = (Part)dataGridView2.CurrentRow.DataBoundItem;
 
-                if (MessageBox.Show("Remove this associated part?",
+                if (MessageBox.Show("Remove this associated part?",                // provide visual feedback to user
                                     "Confirm",
                                     MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
@@ -193,7 +193,7 @@ namespace c968pa
             }
             else
             {
-                MessageBox.Show("Please select a part to remove.");
+                MessageBox.Show("Please select a part to remove.");          // provide visual feedback to user
             }
         }
 
@@ -221,13 +221,13 @@ namespace c968pa
             {
                 dataGridView1.DataSource = new BindingList<Part>(results);
 
-                // Optional: highlight first result
+                //  highlight first result
                 dataGridView1.ClearSelection();
                 dataGridView1.Rows[0].Selected = true;
             }
             else
             {
-                MessageBox.Show("No matching parts found.");
+                MessageBox.Show("No matching parts found.");    // provide visual feedback to user
             }
         }
 

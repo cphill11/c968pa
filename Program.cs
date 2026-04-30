@@ -23,8 +23,7 @@ namespace c968pa
 
 
             //Seed data for demo purposes
-
-            Program.Inventory.AllParts.Add(new InHouse
+            Program.Inventory.AllParts.Add(new InHouse       // Part DataGrid demo data
             {
                 PartID = 1,
                 Name = "Wheel",
@@ -45,9 +44,8 @@ namespace c968pa
                 Max = 20,
                 CompanyName = "Seats Inc"
             });
-
-            // ✅ ADD TEST PRODUCT
-            Program.Inventory.Products.Add(new Product
+            
+            Program.Inventory.Products.Add(new Product     // Product DataGrid demo data
             {
                 ProductID = 1,
                 Name = "Bicycle",
