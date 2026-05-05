@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -96,7 +97,7 @@ namespace c968pa
         }
 
         // Save Part Button functionality
-        private void button1_Click(object sender, EventArgs e) 
+        private void button1_Click(object sender, EventArgs e)
         {
             if (currentPart == null)
             {
@@ -126,37 +127,56 @@ namespace c968pa
                 return;
             }
 
-          
-            if (radioButton1.Checked && currentPart is InHouse inHouse)        // Machine ID validation when using InHouse radio button
+            Part updatedPart = null;
+
+            if (radioButton1.Checked) // Machine ID validation when using InHouse radio button
             {
                 if (!int.TryParse(textBox7.Text, out int machineID))      // TryParse method used to validate input in code instead of allowing code to throw exceptions
                 {
-                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");        // provide visual feedback to user
-                    return;
+                    errorProvider1.SetError(textBox7, "Machine ID must be a number.");     // provide visual feedback to user
+                    return; 
                 }
 
-                inHouse.MachineID = machineID;
+                updatedPart = new InHouse
+                {
+                    PartID = currentPart.PartID,
+                    Name = textBox2.Text,
+                    Price = price,
+                    InStock = stock,
+                    Min = min,
+                    Max = max,
+                    MachineID = machineID
+                };
             }
-            else if (radioButton2.Checked && currentPart is Outsourced outsourced)         // Company Name validation when using Outsourced radio button
+            else if (radioButton2.Checked)   // Company Name validation when using Outsourced radio button
             {
                 if (string.IsNullOrWhiteSpace(textBox7.Text))
                 {
-                    errorProvider1.SetError(textBox7, "Company Name cannot be empty.");         // provide visual feedback to user
+                    errorProvider1.SetError(textBox7, "Company Name cannot be empty.");     // provide visual feedback to user
                     return;
                 }
 
-                outsourced.CompanyName = textBox7.Text;
+                updatedPart = new Outsourced
+                {
+                    PartID = currentPart.PartID,
+                    Name = textBox2.Text,
+                    Price = price,
+                    InStock = stock,
+                    Min = min,
+                    Max = max,
+                    CompanyName = textBox7.Text
+                };
+            }
+            else
+            {
+                MessageBox.Show("Please select a part type.");
+                return;
             }
 
-            // If validation passes, update
-            currentPart.Name = textBox2.Text;
-            currentPart.InStock = stock;
-            currentPart.Price = price;
-            currentPart.Min = min;
-            currentPart.Max = max;
-
+            Program.Inventory.UpdatePart(currentPart.PartID, updatedPart);
             this.Close();
         }
+
 
         private void button2_Click(object sender, EventArgs e)     // Cancel button
         {
