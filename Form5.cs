@@ -131,12 +131,6 @@ namespace c968pa
                 return;
             }
 
-            if (associatedParts.Count == 0)
-            {
-                MessageBox.Show("Product must have at least one associated part.");     // provide visual feedback to user
-                return;
-            }
-
             if (string.IsNullOrWhiteSpace(textBox3.Text))
             {
                 MessageBox.Show("Name cannot be empty.");     // Name text box validation
