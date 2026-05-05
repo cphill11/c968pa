@@ -132,11 +132,11 @@ namespace c968pa
 
         private void button2_Click(object sender, EventArgs e)    // Save product button
         {
-            if (associatedParts.Count == 0)         // requires 1+ selected part
-            {
-                MessageBox.Show("Product must have at least one associated part.");      // provide visual feedback to user
-                return;
-            }
+            //if (associatedParts.Count == 0)         // requires 1+ selected part
+            //{
+            //    MessageBox.Show("Product must have at least one associated part.");      // provide visual feedback to user
+            //    return;
+            //}
 
             if (string.IsNullOrWhiteSpace(textBox3.Text))     // Name text box validation
             {
